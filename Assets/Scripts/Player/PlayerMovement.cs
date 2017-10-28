@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour {
     private int numJumps;
     private float moveX; // Returns float between -1 and 1 depending on which way player is moving
-    private bool isGrounded;
+    private bool isGrounded, canMove;
 
     public float playerSpeed, playerJumpPower;
     public int totalJumps;
@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour {
         playerJumpPower = 1250;
         totalJumps = 2;
         numJumps = totalJumps;
+        canMove = true;
 	}
 	
 	// Update is called once per frame
@@ -30,17 +31,25 @@ public class PlayerMovement : MonoBehaviour {
 
     void PlayerMove() {
         // Controls
-        moveX = Input.GetAxis("Horizontal");
-        if (Input.GetButtonDown("Jump") && numJumps > 0) {
-            Jump();
+        if (canMove) {
+            moveX = Input.GetAxis("Horizontal");
+            if (Input.GetButtonDown("Jump") && numJumps > 0) {
+                Jump();
+            }
         }
 
         // Animations
         Animator anim = GetComponent<Animator>();
         if (!isGrounded) {
+            anim.SetBool("Walking", false);
             anim.SetBool("Jumping", true);
         } else {
             anim.SetBool("Jumping", false);
+            if (Mathf.Abs(moveX) > 0.0f) {
+                anim.SetBool("Walking", true);
+            } else {
+                anim.SetBool("Walking", false);
+            }
         }
 
         // Player direction
@@ -56,7 +65,6 @@ public class PlayerMovement : MonoBehaviour {
         gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(moveX * playerSpeed, gameObject.GetComponent<Rigidbody2D>().velocity.y);
     }
 
-    // TODO: player can currently get "stuck" on a wall while in the air and actively pressing against a wall
     void Jump() {
         gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(gameObject.GetComponent<Rigidbody2D>().velocity.x, 0); // Resets player y velocity so double jump works correctly
         GetComponent<Rigidbody2D>().AddForce(Vector2.up * playerJumpPower);

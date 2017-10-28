@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: b857a74cd0ee7404db08a5422458801b
-timeCreated: 1509175139
+timeCreated: 1509183641
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -15,6 +15,15 @@ TextureImporter:
     21300016: prototype_sprite_8
     21300018: prototype_sprite_9
     21300020: prototype_sprite_10
+    21300022: prototype_sprite_11
+    21300024: prototype_sprite_12
+    21300026: prototype_sprite_13
+    21300028: prototype_sprite_14
+    21300030: prototype_sprite_15
+    21300032: prototype_sprite_16
+    21300034: prototype_sprite_17
+    21300036: prototype_sprite_18
+    21300038: prototype_sprite_19
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -85,7 +94,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 900
+        y: 1200
         width: 300
         height: 300
       alignment: 0
@@ -98,7 +107,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 300
-        y: 900
+        y: 1200
         width: 300
         height: 300
       alignment: 0
@@ -111,7 +120,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 600
-        y: 900
+        y: 1200
         width: 300
         height: 300
       alignment: 0
@@ -123,8 +132,8 @@ TextureImporter:
       name: prototype_sprite_3
       rect:
         serializedVersion: 2
-        x: 0
-        y: 600
+        x: 900
+        y: 1200
         width: 300
         height: 300
       alignment: 0
@@ -136,6 +145,71 @@ TextureImporter:
       name: prototype_sprite_4
       rect:
         serializedVersion: 2
+        x: 0
+        y: 900
+        width: 300
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: prototype_sprite_5
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 900
+        width: 300
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: prototype_sprite_6
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 900
+        width: 300
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: prototype_sprite_7
+      rect:
+        serializedVersion: 2
+        x: 900
+        y: 900
+        width: 300
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: prototype_sprite_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 600
+        width: 300
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: prototype_sprite_9
+      rect:
+        serializedVersion: 2
         x: 300
         y: 600
         width: 300
@@ -146,7 +220,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: prototype_sprite_5
+      name: prototype_sprite_10
       rect:
         serializedVersion: 2
         x: 600
@@ -159,7 +233,20 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: prototype_sprite_6
+      name: prototype_sprite_11
+      rect:
+        serializedVersion: 2
+        x: 900
+        y: 600
+        width: 300
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: prototype_sprite_12
       rect:
         serializedVersion: 2
         x: 0
@@ -172,7 +259,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: prototype_sprite_7
+      name: prototype_sprite_13
       rect:
         serializedVersion: 2
         x: 300
@@ -185,7 +272,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: prototype_sprite_8
+      name: prototype_sprite_14
       rect:
         serializedVersion: 2
         x: 600
@@ -198,7 +285,20 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: prototype_sprite_9
+      name: prototype_sprite_15
+      rect:
+        serializedVersion: 2
+        x: 900
+        y: 300
+        width: 300
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: prototype_sprite_16
       rect:
         serializedVersion: 2
         x: 0
@@ -211,10 +311,36 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: prototype_sprite_10
+      name: prototype_sprite_17
       rect:
         serializedVersion: 2
         x: 300
+        y: 0
+        width: 300
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: prototype_sprite_18
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 0
+        width: 300
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: prototype_sprite_19
+      rect:
+        serializedVersion: 2
+        x: 900
         y: 0
         width: 300
         height: 300
