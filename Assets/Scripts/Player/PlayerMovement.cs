@@ -6,12 +6,14 @@ public class PlayerMovement : MonoBehaviour {
     private int numJumps;
     private float moveX; // Returns float between -1 and 1 depending on which way player is moving
     private bool isGrounded, canMove;
+    private Animator anim;
 
     public float playerSpeed, playerJumpPower;
     public int totalJumps;
 
     // Use this for initialization
     void Start() {
+        anim = GetComponent<Animator>();
         playerSpeed = 10;
         playerJumpPower = 1250;
         totalJumps = 2;
@@ -29,6 +31,10 @@ public class PlayerMovement : MonoBehaviour {
         PlayerPhysics();
     }
 
+    void test() {
+        Debug.Log("test");
+    }
+
     void PlayerMove() {
         // Controls
         if (canMove) {
@@ -39,7 +45,10 @@ public class PlayerMovement : MonoBehaviour {
         }
 
         // Animations
-        Animator anim = GetComponent<Animator>();
+        /*
+         * Player cannot launch attack while moving; they must wait until their x velocity is 0 to be able to trigger attack
+         * Player can attack, then input the walk command to move while the attack animation is playing
+        */
         if (!isGrounded) {
             anim.SetBool("Walking", false);
             anim.SetBool("Jumping", true);
@@ -48,6 +57,15 @@ public class PlayerMovement : MonoBehaviour {
             if (Mathf.Abs(moveX) > 0.0f) {
                 anim.SetBool("Walking", true);
             } else {
+                if (Input.GetKeyDown(KeyCode.Z)) {
+                    anim.SetTrigger("LightAttack");
+                }
+                if (Input.GetKeyDown(KeyCode.X)) {
+                    anim.SetTrigger("HeavyAttack");
+                }
+                // Clears walking hurtboxes
+                PlayerHurtboxManager script = this.GetComponent<PlayerHurtboxManager>();
+                script.setHurtBox(PlayerHurtboxManager.hurtBoxes.clear);
                 anim.SetBool("Walking", false);
             }
         }
