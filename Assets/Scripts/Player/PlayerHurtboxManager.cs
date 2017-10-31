@@ -2,21 +2,24 @@
 using System.Collections;
 
 public class PlayerHurtboxManager : MonoBehaviour {
-
-    // Set these in the editor
+    /*
+     * Set these in the editor
+     * Define frames the player will use for their animations
+     * Each UNIQUE frame gets its own collider
+    */
     public PolygonCollider2D
         walk1, walk2, walk3, walk4, walk5, walk6, walk7, walk8,
         jump1, jump2,
         light1, light2,
         heavy1, heavy2, heavy3;
 
-    // Used for organization
+    // Holds all the colliders
     private PolygonCollider2D[] colliders;
 
-    // Collider on this game object
+    // Active collider for the game object
     private PolygonCollider2D localCollider;
 
-    // We say box, but we're still using polygons.
+    // Hurtbox states for each UNIQUE hurtbox
     public enum hurtBoxes {
         walk1box, walk2box, walk3box, walk4box, walk5box, walk6box, walk7box, walk8box,
         jump1Box, jump2Box,
@@ -26,7 +29,7 @@ public class PlayerHurtboxManager : MonoBehaviour {
     }
 
     void Start() {
-        // Set up an array so our script can more easily set up the hit boxes
+    	// Initialize colliders
         colliders = new PolygonCollider2D[] {
             walk1, walk2, walk3, walk4, walk5, walk6, walk7, walk8,
             jump1, jump2,
@@ -40,10 +43,12 @@ public class PlayerHurtboxManager : MonoBehaviour {
         localCollider.pathCount = 0; // Clear auto-generated polygons
     }
 
+    // Do something when it collides with another collider
     void OnTriggerEnter2D(Collider2D col) {
         Debug.Log("Collider hit something!");
     }
 
+    // Turns on hurtbox, used in when adding an animation event
     public void setHurtBox(hurtBoxes val) {
         if (val != hurtBoxes.clear) {
             localCollider.SetPath(0, colliders[(int)val].GetPath(0));
