@@ -29,7 +29,6 @@ public class PlayerMovement : MonoBehaviour {
     // FixedUpdate is always called on fixed intervals, good for physics
     private void FixedUpdate() {
         PlayerPhysics();
-        Debug.Log(moveX);
     }
 
     void PlayerMove() {
@@ -39,6 +38,9 @@ public class PlayerMovement : MonoBehaviour {
             if (Input.GetButtonDown("Jump") && numJumps > 0) {
                 Jump();
             }
+        } else {
+            Debug.Log("you shouldn't be moving wtf");
+            gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         }
 
         // Animations
@@ -47,24 +49,23 @@ public class PlayerMovement : MonoBehaviour {
          * Player can attack, then input the walk command to move while the attack animation is playing
         */
         if (!isGrounded) {
-            anim.SetBool("Walking", false);
-            anim.SetBool("Jumping", true);
         } else {
-            anim.SetBool("Jumping", false);
-            if (Mathf.Abs(moveX) > 0.0f) {
+            if (Mathf.Abs(moveX) < 0.0f) {
                 anim.SetBool("Walking", true);
+            } else if (Input.GetKeyDown(KeyCode.Z)) {
+                anim.SetTrigger("LightAttack");
+                canMove = false;
+            } else if (Input.GetKeyDown(KeyCode.X)) {
+                anim.SetTrigger("HeavyAttack");
+                canMove = false;
             } else {
-                if (Input.GetKeyDown(KeyCode.Z)) {
-                    anim.SetTrigger("LightAttack");
-                }
-                if (Input.GetKeyDown(KeyCode.X)) {
-                    anim.SetTrigger("HeavyAttack");
-                }
-                // Clears walking hurtboxes
-                PlayerHurtboxManager script = this.GetComponent<PlayerHurtboxManager>();
-                script.setHurtBox(PlayerHurtboxManager.hurtBoxes.clear);
+                PlayerHurtboxManager hurtScript = this.GetComponent<PlayerHurtboxManager>();
+                hurtScript.setHurtBox(PlayerHurtboxManager.hurtBoxes.clear);
                 anim.SetBool("Walking", false);
+                canMove = true;
             }
+            PlayerAttack atkScript = this.GetComponent<PlayerAttack>();
+            atkScript.setHitBox(PlayerAttack.hitBoxes.clear);
         }
 
         // Player direction
@@ -83,12 +84,14 @@ public class PlayerMovement : MonoBehaviour {
     void Jump() {
         gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(gameObject.GetComponent<Rigidbody2D>().velocity.x, 0); // Resets player y velocity so double jump works correctly
         GetComponent<Rigidbody2D>().AddForce(Vector2.up * playerJumpPower);
+        anim.SetBool("Jumping", true);
         isGrounded = false;
         numJumps--;
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.tag == "Ground") {
+            anim.SetBool("Jumping", false);
             isGrounded = true;
             numJumps = totalJumps;
         }

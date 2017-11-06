@@ -45,7 +45,7 @@ public class PlayerHurtboxManager : MonoBehaviour {
 
     // Do something when it collides with another collider
     void OnTriggerEnter2D(Collider2D col) {
-        Debug.Log("Collider hit something!");
+        // Debug.Log("Collider hit something!");
     }
 
     // Turns on hurtbox, used in when adding an animation event

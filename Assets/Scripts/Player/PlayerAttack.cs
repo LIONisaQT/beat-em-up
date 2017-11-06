@@ -11,13 +11,13 @@ public class PlayerAttack : MonoBehaviour {
 	public PolygonCollider2D light1, heavy1;
 
 	// Holds all the colliders
-    public PolygonCollider2D[] attackHitboxes;
+    private PolygonCollider2D[] attackHitboxes;
 
     // Active collider for the game object
     private PolygonCollider2D currentHitbox;
 
     // Hitbox states for each UNIQUE hitbox
-    public enum hitboxes {
+    public enum hitBoxes {
     	light1Box,
     	heavy1Box,
     	clear
@@ -39,12 +39,12 @@ public class PlayerAttack : MonoBehaviour {
 	
 	// Do something when it collides with another collider
 	void OnTriggerEnter2D(Collider2D col) {
-		Debug.Log("Hit something!");
+		// Debug.Log("Hit something!");
 	}
 
 	// Turns on hittbox, used in when adding an animation event
-    public void setHitBox(hitboxes val) {
-    	if (val != hitboxes.clear) {
+    public void setHitBox(hitBoxes val) {
+    	if (val != hitBoxes.clear) {
     		currentHitbox.SetPath(0, attackHitboxes[(int)val].GetPath(0));
     		return;
     	}
