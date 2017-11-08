@@ -39,7 +39,7 @@ public class PlayerAttack : MonoBehaviour {
 	
 	// Do something when it collides with another collider
 	void OnTriggerEnter2D(Collider2D col) {
-		// Debug.Log("Hit something!");
+		Debug.Log("[PlayerAttack] " + this.gameObject.tag + " hit " + col.gameObject.tag); // this refers to player, not actual attack hitbox
 	}
 
 	// Turns on hittbox, used in when adding an animation event
