@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
     private int numJumps;
-    private bool isGrounded, canMove;
+	//checks
+    private bool isGrounded, isMoving, isFlying, isCrouching, canMove;
     private Animator anim;
 
     public float playerSpeed, playerJumpPower;
@@ -15,7 +16,7 @@ public class PlayerMovement : MonoBehaviour {
         anim = GetComponent<Animator>();
         playerSpeed = 7;
         playerJumpPower = 1250;
-        totalJumps = 999;
+        totalJumps = 2;
         numJumps = totalJumps;
         canMove = true;
 	}
@@ -36,38 +37,99 @@ public class PlayerMovement : MonoBehaviour {
         if (isGrounded) {
             // Movement
             if (Mathf.Abs(GetComponent<Rigidbody2D>().velocity.x) > 0.0f && canMove) {
+				//isMoving = true
                 anim.SetBool("Walking", true);
+				isMoving = true;
             } else {
+				//isMoving = false
                 anim.SetBool("Walking", false);
+				isMoving = false;
             }
 
             // Crouching
             if (Input.GetKey("down")) {
                 anim.SetBool("Crouching", true);
                 canMove = false;
+				isCrouching = true;
             }
             if (Input.GetKeyUp("down")) {
                 anim.SetBool("Crouching", false);
                 ResetCanMove();
+				isCrouching = false;
             }
+				
 
-            // Attacks
-            if (Input.GetKeyDown(KeyCode.Z)) {
-                canMove = false;
-                if (!CheckActiveAttackStates()) {
-                    anim.SetTrigger("LightAttack");
-                }
-            } else if (Input.GetKeyDown(KeyCode.X)) {
-                canMove = false;
-                if (!CheckActiveAttackStates()) {
-                    anim.SetTrigger("HeavyAttack");
-                }
-            }
+			if (isCrouching) {
+
+				if (Input.GetKeyDown (KeyCode.Z)) {
+					canMove = false;
+					if (!CheckActiveAttackStates ()) {
+						anim.SetTrigger ("LightAttack");
+						print ("crouching light");
+					}
+					//basic heavy attack
+				} else if (Input.GetKeyDown (KeyCode.X)) {
+					canMove = false;
+					if (!CheckActiveAttackStates ()) {
+						anim.SetTrigger ("HeavyAttack");
+						print ("crouching heavy");
+					}
+				}
+
+			} else if (isMoving) {
+
+				if (Input.GetKeyDown (KeyCode.Z)) {
+					//canMove = false;
+					if (!CheckActiveAttackStates ()) {
+						anim.SetTrigger ("LightAttack");
+						print ("moving light");
+					}
+				} else if (Input.GetKeyDown (KeyCode.X)) {
+					canMove = false;
+					if (!CheckActiveAttackStates ()) {
+						anim.SetTrigger ("HeavyAttack");
+						print ("moving heavy");
+					}
+				}
+
+			} else {
+
+				if (Input.GetKeyDown (KeyCode.Z)) {
+					canMove = false;
+					if (!CheckActiveAttackStates ()) {
+						anim.SetTrigger ("LightAttack");
+						print ("light");
+					}
+				} else if (Input.GetKeyDown (KeyCode.X)) {
+					canMove = false;
+					if (!CheckActiveAttackStates ()) {
+						anim.SetTrigger ("HeavyAttack");
+						print ("heavy");
+					}
+				}
+					
+			}
+
+
         }
         
         // Animations in air
         else {
+			//basic light air attack
+			if (Input.GetKeyDown (KeyCode.Z)) {
+				if (!CheckActiveAttackStates()) {
+					//anim.SetTrigger("LightAttack");
+					print("light air");
+				}
+			}
             // Maybe different jumping and falling animations?
+			if (Input.GetKeyDown (KeyCode.X)) {
+				if (!CheckActiveAttackStates()) {
+					//anim.SetTrigger("HeavyAttack");
+					print("heavy air");
+				}
+			}
+
         }
 
         // Player direction
