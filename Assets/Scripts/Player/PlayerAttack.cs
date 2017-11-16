@@ -48,10 +48,8 @@ public class PlayerAttack : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D col) {
         if (currentState == hitboxes.light1Box) {
             col.GetComponent<Rigidbody2D>().AddForce(lightAttackForce);
-            col.GetComponent<SandbagLogic>().removeHealth(10);
         } else if (currentState == hitboxes.heavy1Box) {
             col.GetComponent<Rigidbody2D>().AddForce(heavyAttackForce);
-            col.GetComponent<SandbagLogic>().removeHealth(20);
         }
     }
 
