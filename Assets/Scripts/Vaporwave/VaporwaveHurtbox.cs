@@ -7,7 +7,7 @@ public class VaporwaveHurtbox : PlayerHurtboxManager {
     void Start () {
         // Initialize colliders
         colliders = new PolygonCollider2D[] {
-            walk1, walk2, walk3, walk4, walk5, walk6, walk7, walk8,
+            walk1, walk2, walk3, walk4, walk5,
             jump1, jump2,
             light1, light2,
             heavy1, heavy2, heavy3,
