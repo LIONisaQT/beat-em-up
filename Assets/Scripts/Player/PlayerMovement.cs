@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour {
 
     public float playerSpeed, playerJumpPower;
     public int totalJumps;
+    public KeyCode left, right, up, down, lightAtk, heavyAtk;
 
     // Use this for initialization
     void Start() {
@@ -18,20 +19,28 @@ public class PlayerMovement : MonoBehaviour {
         totalJumps = 2;
         numJumps = totalJumps;
         canMove = true;
+
+        // Default character keys just in case
+        left = KeyCode.LeftArrow;
+        right = KeyCode.RightArrow;
+        up = KeyCode.UpArrow;
+        down = KeyCode.DownArrow;
+        lightAtk = KeyCode.Z;
+        heavyAtk = KeyCode.X;
     }
 
     // Update is called once per frame
-    void Update() {
-        PlayerLogic();
+    private void Update() {
+        PlayerLogic(left, right, up, down, lightAtk, heavyAtk);
     }
 
     // FixedUpdate is always called on fixed intervals, good for physics
     private void FixedUpdate() {
-        PlayerPhysics();
+        PlayerPhysics(left, right);
     }
 
     // Player movement logic
-    void PlayerLogic() {
+    protected void PlayerLogic(KeyCode left, KeyCode right, KeyCode up, KeyCode down, KeyCode light, KeyCode heavy) {
         // Animations on ground
         if (isGrounded) {
             // Movement
@@ -39,31 +48,60 @@ public class PlayerMovement : MonoBehaviour {
                 anim.SetBool("Walking", true);
             } else if (!CheckActiveAttackStates()) {
                 anim.SetBool("Walking", false);
-                // Clear hurtbox, otherwise whatever last walking hurtbox will persist
-                //PlayerHurtboxManager hurtScript = this.GetComponent<PlayerHurtboxManager>();
-                //hurtScript.setHurtBox(PlayerHurtboxManager.hurtboxes.clear);
             }
 
             // Crouching
-            if (Input.GetKey("down")) {
+            if (Input.GetKey(down)) {
                 anim.SetBool("Crouching", true);
                 canMove = false;
             }
-            if (Input.GetKeyUp("down")) {
+            if (Input.GetKeyUp(down)) {
                 anim.SetBool("Crouching", false);
                 ResetCanMove();
             }
 
-            // Attacks
-            if (Input.GetKeyDown(KeyCode.Z)) {
-                canMove = false;
-                if (!CheckActiveAttackStates()) {
-                    anim.SetTrigger("LightAttack");
+            if (anim.GetBool("Crouching")) {
+                if (Input.GetKeyDown(lightAtk)) {
+                    canMove = false;
+                    if (!CheckActiveAttackStates()) {
+                        anim.SetTrigger("LightAttack");
+                        print("crouching light");
+                    }
                 }
-            } else if (Input.GetKeyDown(KeyCode.X)) {
-                canMove = false;
-                if (!CheckActiveAttackStates()) {
-                    anim.SetTrigger("HeavyAttack");
+                if (Input.GetKeyDown(heavyAtk)) {
+                    canMove = false;
+                    if (!CheckActiveAttackStates()) {
+                        anim.SetTrigger("HeavyAttack");
+                        print("crouching heavy");
+                    }
+                }
+            } else if (anim.GetBool("Walking")) {
+                if (Input.GetKeyDown(lightAtk)) {
+                    if (!CheckActiveAttackStates()) {
+                        anim.SetTrigger("LightAttack");
+                        print("moving light");
+                    }
+                }
+                if (Input.GetKeyDown(heavyAtk)) {
+                    canMove = false;
+                    if (!CheckActiveAttackStates()) {
+                        anim.SetTrigger("HeavyAttack");
+                        print("moving heavy");
+                    }
+                }
+            } else {
+                if (Input.GetKeyDown(lightAtk)) {
+                    canMove = false;
+                    if (!CheckActiveAttackStates()) {
+                        anim.SetTrigger("LightAttack");
+                        print("light");
+                    }
+                } else if (Input.GetKeyDown(heavyAtk)) {
+                    canMove = false;
+                    if (!CheckActiveAttackStates()) {
+                        anim.SetTrigger("HeavyAttack");
+                        print("heavy");
+                    }
                 }
             }
         }
@@ -71,6 +109,18 @@ public class PlayerMovement : MonoBehaviour {
         // Animations in air
         else {
             // Maybe different jumping and falling animations?
+            if (Input.GetKeyDown(lightAtk)) {
+                if (!CheckActiveAttackStates()) {
+                    //anim.SetTrigger("LightAttack");
+                    print("light air");
+                }
+            }
+            if (Input.GetKeyDown(heavyAtk)) {
+                if (!CheckActiveAttackStates()) {
+                    //anim.SetTrigger("HeavyAttack");
+                    print("heavy air");
+                }
+            }
         }
 
         // Player direction
@@ -83,14 +133,14 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     // Player physics logic
-    void PlayerPhysics() {
+    protected void PlayerPhysics(KeyCode left, KeyCode right) {
         if (!CheckActiveAttackStates() && canMove) {
-            if (Input.GetKey("right")) {
+            if (Input.GetKey(right)) {
                 GetComponent<Rigidbody2D>().velocity = new Vector2(playerSpeed, GetComponent<Rigidbody2D>().velocity.y);
-            } else if (Input.GetKey("left")) {
+            } else if (Input.GetKey(left)) {
                 GetComponent<Rigidbody2D>().velocity = new Vector2(-playerSpeed, GetComponent<Rigidbody2D>().velocity.y);
             }
-            if (Input.GetButtonDown("Jump") && numJumps > 0) { Jump(); }
+            if (Input.GetKeyDown(up) && numJumps > 0) { Jump(); }
         }
     }
 
@@ -103,7 +153,7 @@ public class PlayerMovement : MonoBehaviour {
         numJumps--;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) {
+    protected void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.tag == "Ground") {
             isGrounded = true;
             if (anim.GetBool("Jumping")) {
