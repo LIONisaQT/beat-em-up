@@ -1,10 +1,14 @@
 fileFormatVersion: 2
 guid: 452a1b202ae0bf7468fd35b5404db32d
-timeCreated: 1509177559
-licenseType: Pro
+timeCreated: 1510869217
+licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - light1: {instanceID: 0}
+  - heavy1: {instanceID: 0}
+  - hitClip: {fileID: 8300000, guid: 3e65f811e78311e4f9bdaffff3d8f11f, type: 3}
+  - hitSource: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

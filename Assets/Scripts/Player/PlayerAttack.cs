@@ -13,6 +13,11 @@ public class PlayerAttack : MonoBehaviour {
     // How much knockback each attack does
     public Vector2 lightAttackForce, heavyAttackForce;
 
+    // sound of the hit
+    public AudioClip hitClip;
+
+    public AudioSource hitSource;
+
     // Holds all the colliders
     protected PolygonCollider2D[] attackHitboxes;
 
@@ -44,12 +49,15 @@ public class PlayerAttack : MonoBehaviour {
         SetAttackForce();
     }
 
-    // Do something when it collides with another collider
+    // Do something when it collides with another collider + play sound
     void OnTriggerEnter2D(Collider2D col) {
+        hitSource.clip = hitClip;
         if (currentState == hitboxes.light1Box) {
             col.GetComponent<Rigidbody2D>().AddForce(lightAttackForce);
+            hitSource.Play();
         } else if (currentState == hitboxes.heavy1Box) {
             col.GetComponent<Rigidbody2D>().AddForce(heavyAttackForce);
+            hitSource.Play();
         }
     }
 
