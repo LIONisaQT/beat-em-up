@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour {
     public float playerSpeed, playerJumpPower;
     public int totalJumps;
 
+
     // Use this for initialization
     void Start() {
         anim = GetComponent<Animator>();
